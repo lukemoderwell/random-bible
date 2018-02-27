@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Random Bible</title>
+    <meta name="author" content="Luke Moderwell">
+    <meta name="description" content="description here">
+    <meta name="keywords" content="keywords,here">
+  </head>
+  <body>
+    <h2 id="bookName"></h2>
+    <audio data-audio-root controls onloadeddata="dataLoaded()" />
+  </body>
+  <script>
+    const bible = {
+      nt: [
+        "Matthew",
+        "Mark",
+        "Luke",
+        "John",
+        "Acts",
+        "Romans",
+        "Ephesians",
+        "Galations",
+        "Hebrews",
+        "James",
+        "Jude",
+        "Philemon",
+        "Philippians",
+        "Titus",
+        "Colossians",
+        "1Thessalonians",
+        "2Thessalonians",
+        "1Peter",
+        "2Peter",
+        "1Corinthians",
+        "2Corinthians",
+        "1-3John",
+        "1-2Timothy",
+        "Revelation"
+      ],
+      get random() {
+        const rand = Math.floor(Math.random() * Math.floor(this.nt.length))
+        return this.nt[rand]
+      }
+    }
+
+    const audio = document.querySelector('[data-audio-root]')
+    const title = document.getElementById('bookName')
+    
+    function setTitle(name) {
+      title.textContent = name
+    }
+    
+    function setAudio(fileName) {
+      audio.src = `/audio/nt/${fileName}.mp3`
+    }
+
+    function setMeta() {
+      const book = bible.random
+      setTitle(book)
+      setAudio(book)
+    }
+
+    function randomizeInterval() {
+      console.log(audio.readyState);
+      if (audio.readyState > 2) {
+        audio.currentTime = Math.floor(Math.random() * Math.floor(audio.duration))
+      } else {
+        audio.currentTime = 0
+      }
+      audio.play()
+    }
+
+    function dataLoaded() {
+      randomizeInterval()
+    }
+
+    function init() {
+      setMeta()
+    }
+
+    init()
+  </script>
+</html>
