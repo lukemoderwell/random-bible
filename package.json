@@ -1,7 +1,7 @@
 {
   "name": "random-bible",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "repository": "https://github.com/lukemoderwell/random-bible.git",
   "author": "lukemoderwell <luke.moderwell@gmail.com>",
   "license": "MIT",
@@ -10,6 +10,8 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "airtable": "^0.5.2",
+    "axios": "^0.18.0",
     "express": "^4.16.2"
   }
 }
