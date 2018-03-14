@@ -1,9 +1,14 @@
+const audio = document.querySelector('[data-audio-root]')
+const randomBtn = document.querySelector('[data-audio-randomize]')
+const title = document.getElementById('bookName')
+
+// Probably want to replace this object due to manual updating
 const bible = {
   nt: [
-    "matthew", "mark", "luke", "john", "acts", "romans", "1corinthians", "2corinthians"
+    "Matthew"
   ],
   chapters: [
-    28, 16, 24, 21, 28, 16, 16, 13 
+    28
   ],
   get randomize() {
     const number = Math.floor(Math.random() * Math.floor(this.nt.length))
@@ -18,29 +23,24 @@ const bible = {
   }
 }
 
-const audio = document.querySelector('[data-audio-root]')
-const randomBtn = document.querySelector('[data-audio-randomize]')
-const title = document.getElementById('bookName')
-
-function capitalize(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-function textFormat(word) {
-  const firstChar = word.charAt(0);
-  if (!isNaN(firstChar)) {
-    return `${word.charAt(0)} ${word.charAt(1).toUpperCase() + word.slice(2)}`
-  } else {
-    return word.charAt(0).toUpperCase() + word.slice(1);
-  }
-}
-
 function setTitle(book, chapter) {
-  title.textContent = `${textFormat(book)} ${chapter}`
+  title.textContent = `${book} ${chapter}`
 }
 
-function setAudio(book, chapter) {
-  audio.src = `/audio/nt/${book}/${chapter}.mp3`
+function setAudio(source) {
+  audio.src = source
+}
+
+function fetchData(book, chapter) {
+  fetch(`http://localhost:5000/bible/${book}/${chapter}`)
+  .then((res) => {
+    return res.json();
+  })
+  .then((json) => {
+    let data = json[0]
+    setTitle(data.fields.Book, data.fields.Chapter)
+    setAudio(data.fields.Audio[0].url)
+  })
 }
 
 function dataLoaded() {
@@ -53,8 +53,7 @@ function dataLoaded() {
 
 function init() {
   const selection = bible.randomize
-  setAudio(selection[0], selection[1])
-  setTitle(selection[0], selection[1])
+  fetchData(selection[0], selection[1])
 }
 
 randomBtn.addEventListener('click', init)
