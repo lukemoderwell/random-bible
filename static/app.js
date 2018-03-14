@@ -8,10 +8,10 @@ let currentBook;
 // Probably want to replace this object due to manual updating
 const bible = {
   nt: [
-    "Matthew"
+    "Matthew", "Mark"
   ],
   chapters: [
-    28
+    28, 16
   ],
   get randomize() {
     const number = Math.floor(Math.random() * Math.floor(this.nt.length))
@@ -31,7 +31,8 @@ function setText(book, chapter, categories) {
   categoryText.textContent = "";
   if (categories !== null) {
     for (let i = 0; i < categories.length; i += 1) {
-      var elm = document.createElement('span')
+      var elm = document.createElement('span');
+      elm.style = `margin-right: .5rem; padding: .25rem .5rem; font-size: .875rem; background-color: #ccc;`
       elm.innerText = categories[i]
       categoryText.appendChild(elm)
     }
