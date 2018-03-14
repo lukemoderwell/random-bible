@@ -2,6 +2,8 @@ const audio = document.querySelector('[data-audio-root]')
 const randomBtn = document.querySelector('[data-audio-randomize]')
 const title = document.querySelector('[data-book-title]')
 const categoryText = document.querySelector('[data-book-categories]')
+let nextChapter;
+let currentBook;
 
 // Probably want to replace this object due to manual updating
 const bible = {
@@ -25,7 +27,8 @@ const bible = {
 }
 
 function setText(book, chapter, categories) {
-  title.textContent = `${book} ${chapter}`
+  title.textContent = `${book} ${chapter}`;
+  categoryText.textContent = "";
   if (categories !== null) {
     for (let i = 0; i < categories.length; i += 1) {
       var elm = document.createElement('span')
@@ -48,11 +51,17 @@ function fetchData(book, chapter) {
     console.log(error);
   })
   .then((json) => {
-    let data = json[0].fields
-    console.log(data)
-    setText(data.Book, data.Chapter, data.Categories)
-    setAudio(data.Audio[0].url)
+    let data = json[0].fields;
+    console.log(data);
+    setText(data.Book, data.Chapter, data.Categories);
+    setAudio(data.Audio[0].url);
+    nextChapter = chapter += 1;
+    currentBook = book;
   })
+}
+
+function playNext(){
+  fetchData(currentBook, nextChapter)
 }
 
 function dataLoaded() {
