@@ -40,7 +40,7 @@ function setAudio(source) {
 }
 
 function fetchData(book, chapter) {
-  fetch(`http://localhost:5000/bible/${book}/${chapter}`)
+  fetch(`/bible/${book}/${chapter}`)
   .then((res) => {
     return res.json();
   })
