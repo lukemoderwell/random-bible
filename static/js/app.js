@@ -1,8 +1,12 @@
-const audio = document.querySelector('[data-audio-root]')
-const randomBtn = document.querySelector('[data-audio-randomize]')
-const title = document.querySelector('[data-book-title]')
-const categoryText = document.querySelector('[data-book-categories]')
+const audio = document.querySelector('[data-audio-root]');
+const randomBtn = document.querySelector('[data-audio-randomize]');
+const title = document.querySelector('[data-book-title]');
+const categoryText = document.querySelector('[data-book-categories]');
+const playTime = document.querySelector('[data-playtime]');
+const playBtn = document.querySelector('[data-play-button]');
+
 let nextChapter;
+let prevChapter;
 let currentBook;
 
 // Probably want to replace this object due to manual updating
@@ -32,15 +36,15 @@ function setText(book, chapter, categories) {
   if (categories !== null) {
     for (let i = 0; i < categories.length; i += 1) {
       var elm = document.createElement('span');
-      elm.style = `margin-right: .5rem; padding: .25rem .5rem; font-size: .875rem; background-color: #ccc;`
-      elm.innerText = categories[i]
-      categoryText.appendChild(elm)
+      elm.classList.add('category');
+      elm.innerText = categories[i];
+      categoryText.appendChild(elm);
     }
   }
 }
 
 function setAudio(source) {
-  audio.src = source
+  audio.src = source;
 }
 
 function fetchData(book, chapter) {
@@ -54,20 +58,39 @@ function fetchData(book, chapter) {
   .then((json) => {
     let data = json[0].fields;
     console.log(data);
-    setText(data.Book, data.Chapter, data.Categories);
     setAudio(data.Audio[0].url);
+    setText(data.Book, data.Chapter, data.Categories);
     nextChapter = chapter += 1;
     currentBook = book;
   })
 }
 
-function playNext(){
+function animateProgress() {
+  const bar = document.querySelector('[data-progress]');
+  bar.style = `width: 100%; transition: ${audio.duration}s width linear`;
+}
+
+function fetchNext(){
   fetchData(currentBook, nextChapter)
+}
+
+function toggleAudio() {
+  if (playBtn.classList.value == 'playBtn') {
+    playBtn.classList.add('pause');
+    audio.play();
+  } else {
+    playBtn.classList.remove('pause');
+    audio.pause();
+  }
 }
 
 function dataLoaded() {
   if (audio.readyState > 1) {
     audio.play()
+    var minutes = Math.floor(audio.duration / 60);
+    var seconds = Math.round(audio.duration - minutes * 60);
+    playTime.textContent = `${minutes}:${seconds}`;
+    animateProgress();
   } else {
     alert("Audio can't play")
   }

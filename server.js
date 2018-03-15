@@ -4,7 +4,6 @@ const app = express()
 const port = process.env.PORT || 3000
 const airtable_base = process.env.AIRTABLE_BASE;
 
-
 airtable.configure({
     endpointUrl: 'https://api.airtable.com',
     apiKey: process.env.AIRTABLE_API_KEY
