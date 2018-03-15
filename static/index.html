@@ -8,12 +8,22 @@
     <meta name="author" content="Luke Moderwell">
     <meta name="description" content="A totally random audio Bible with commentary">
     <meta name="keywords" content="bible,audio,random">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
   </head>
   <body>
-    <h2 data-book-title></h2>
-    <h3 data-book-categories></h3>
-    <audio data-audio-root controls onloadeddata="dataLoaded()" onended="playNext()"></audio>
-    <button data-audio-randomize style="display: block; margin-top: 1rem;">Randomize</button>
+    <div class="app">
+      <h2 data-book-title class="title"></h2>
+      <div data-book-categories class="categories"></div>
+      <div class="controls">
+        <button data-play-button class="playBtn" onclick="toggleAudio()"></button>
+        <button data-audio-randomize style="display: block; margin-top: 1rem;">Randomize</button>  
+      </div>
+      <audio data-audio-root onloadeddata="dataLoaded()" onended="fetchNext()"></audio>
+      <div class="footer">
+        <h4 data-playtime class="duration"></h4>
+        <div data-progress class="progress"></div>
+      </div>
+    </div>
   </body>
-  <script type="text/javascript" src="/app.js"></script>
+  <script type="text/javascript" src="./js/app.js"></script>
 </html>

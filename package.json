@@ -7,11 +7,13 @@
   "license": "MIT",
   "private": false,
   "scripts": {
+    "build": "node-sass --watch ./static/scss -o ./static/css",
     "start": "node server.js"
   },
   "dependencies": {
     "airtable": "^0.5.2",
     "axios": "^0.18.0",
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "node-sass": "^4.7.2"
   }
 }
