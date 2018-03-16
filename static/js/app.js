@@ -4,6 +4,7 @@ const title = document.querySelector('[data-book-title]');
 const categoryText = document.querySelector('[data-book-categories]');
 const playTime = document.querySelector('[data-playtime]');
 const playBtn = document.querySelector('[data-play-button]');
+const bar = document.querySelector('[data-progress]');
 
 let nextChapter;
 let prevChapter;
@@ -61,12 +62,12 @@ function fetchData(book, chapter) {
     setAudio(data.Audio[0].url);
     setText(data.Book, data.Chapter, data.Categories);
     nextChapter = chapter += 1;
+    prevChapter = chapter -= 1;
     currentBook = book;
   })
 }
 
 function animateProgress() {
-  const bar = document.querySelector('[data-progress]');
   bar.style = `width: 100%; transition: ${audio.duration}s width linear`;
 }
 
@@ -78,15 +79,17 @@ function toggleAudio() {
   if (playBtn.classList.value == 'playBtn') {
     playBtn.classList.add('pause');
     audio.play();
+    bar.style.animationPlayState = "running";
   } else {
     playBtn.classList.remove('pause');
     audio.pause();
+    bar.style.animationPlayState = "paused";
   }
 }
 
 function dataLoaded() {
   if (audio.readyState > 1) {
-    audio.play()
+    toggleAudio()
     var minutes = Math.floor(audio.duration / 60);
     var seconds = Math.round(audio.duration - minutes * 60);
     playTime.textContent = `${minutes}:${seconds}`;
