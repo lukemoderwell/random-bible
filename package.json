@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "node-sass --watch ./static/scss -o ./static/css",
+    "sass": "node-sass --watch ./static/scss -o ./static/css",
     "start": "node server.js"
   },
   "dependencies": {
