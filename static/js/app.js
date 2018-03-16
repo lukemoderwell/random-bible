@@ -61,8 +61,8 @@ function fetchData(book, chapter) {
     console.log(data);
     setAudio(data.Audio[0].url);
     setText(data.Book, data.Chapter, data.Categories);
-    nextChapter = chapter += 1;
     prevChapter = chapter -= 1;
+    nextChapter = chapter += 1;
     currentBook = book;
   })
 }
@@ -71,8 +71,10 @@ function animateProgress() {
   bar.style = `width: 100%; transition: ${audio.duration}s width linear`;
 }
 
-function fetchNext(){
-  fetchData(currentBook, nextChapter)
+function fetchAdjacent(direction){
+  direction === "next" ?
+    fetchData(currentBook, nextChapter) :
+    fetchData(currentBook, prevChapter);
 }
 
 function toggleAudio() {

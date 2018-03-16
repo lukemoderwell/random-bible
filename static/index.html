@@ -17,10 +17,21 @@
       <h2 data-book-title class="title"></h2>
       <div data-book-categories class="categories"></div>
       <div class="controls">
-        <button data-play-button class="playBtn" onclick="toggleAudio()"></button>
-        <button data-audio-randomize style="display: block; margin-top: 1rem;">Randomize</button>
+        <div class="controls_selection">
+          <select>
+            <option>New Testament</option>
+            <option>Gospel</option>
+            <option>Parable</option>
+          </select>
+          <button data-audio-randomize style="display: block; margin-top: 1rem;">Randomize</button>
+        </div>
+        <div class="controls_audio">
+          <button data-next class="next" onclick="fetchAdjacent('prev')">prev</button>
+          <button data-play-button class="playBtn" onclick="toggleAudio()"></button>
+          <button data-next class="next" onclick="fetchAdjacent('next')">next</button>
+        </div>
       </div>
-      <audio data-audio-root onloadeddata="dataLoaded()" onended="fetchNext()"></audio>
+      <audio data-audio-root onloadeddata="dataLoaded()" onended="fetchAdjacent('next')"></audio>
       <div class="footer">
         <h4 data-playtime class="duration"></h4>
         <div data-progress class="progress"></div>
