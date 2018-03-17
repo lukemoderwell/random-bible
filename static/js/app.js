@@ -13,10 +13,10 @@ let currentBook;
 // Probably want to replace this object due to manual updating
 const bible = {
   nt: [
-    "Matthew", "Mark"
+    "Matthew", "Mark", "Luke", "John"
   ],
   chapters: [
-    28, 16
+    28, 16, 24, 21
   ],
   get randomize() {
     const number = Math.floor(Math.random() * Math.floor(this.nt.length))
@@ -48,8 +48,31 @@ function setAudio(source) {
   audio.src = source;
 }
 
-function fetchData(book, chapter) {
+function setAdjacent(current) {
+  prevChapter = current -= 1;
+  nextChapter = current += 1;
+}
+
+function getData(book, chapter) {
   fetch(`/bible/${book}/${chapter}`)
+  .then((res) => {
+    return res.json();
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+  .then((json) => {
+    let data = json[0].fields;
+    console.log(data);
+    currentBook = book;
+    setAudio(data.Audio[0].url);
+    setText(data.Book, data.Chapter, data.Categories);
+    setAdjacent(chapter);
+  })
+}
+
+function getCategorized(category) {
+  fetch(`/category/${category}`)
   .then((res) => {
     return res.json();
   })
@@ -67,14 +90,14 @@ function fetchData(book, chapter) {
   })
 }
 
-function animateProgress() {
-  bar.style = `width: 100%; transition: ${audio.duration}s width linear`;
+function getAdjacent(direction){
+  direction === "next" ?
+    getData(currentBook, nextChapter) :
+    getData(currentBook, prevChapter);
 }
 
-function fetchAdjacent(direction){
-  direction === "next" ?
-    fetchData(currentBook, nextChapter) :
-    fetchData(currentBook, prevChapter);
+function animateProgress() {
+  bar.style = `width: 100%; transition: ${audio.duration}s width linear`;
 }
 
 function toggleAudio() {
@@ -102,8 +125,13 @@ function dataLoaded() {
 }
 
 function init() {
-  const selection = bible.randomize
-  fetchData(selection[0], selection[1])
+  let selectionValue = document.querySelector('[data-select-category]').value;
+  if (selectionValue === 'Choose A Category') {
+    const selection = bible.randomize;
+    getData(selection[0], selection[1]);
+  } else {
+    getCategorized(selectionValue);
+  }
 }
 
 randomBtn.addEventListener('click', init)
