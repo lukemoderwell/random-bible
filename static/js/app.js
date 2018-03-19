@@ -2,7 +2,6 @@ const audio = document.querySelector('[data-audio-root]');
 const randomBtn = document.querySelector('[data-audio-randomize]');
 const title = document.querySelector('[data-book-title]');
 const categoryText = document.querySelector('[data-book-categories]');
-const playTime = document.querySelector('[data-playtime]');
 const playBtn = document.querySelector('[data-play-button]');
 const bar = document.querySelector('[data-progress]');
 
@@ -20,7 +19,6 @@ const bible = {
   ],
   get randomize() {
     const number = Math.floor(Math.random() * Math.floor(this.nt.length))
-    let chapterNumber
     const book = this.nt[number]
     let chapter = Math.floor(Math.random() * Math.floor(this.chapters[number]))
     if (chapter === 0) {
@@ -49,8 +47,8 @@ function setAudio(source) {
 }
 
 function setAdjacent(current) {
-  prevChapter = current -= 1;
-  nextChapter = current += 1;
+  prevChapter = current - 1;
+  nextChapter = current + 1;
 }
 
 function getData(book, chapter) {
@@ -62,12 +60,13 @@ function getData(book, chapter) {
     console.log(error);
   })
   .then((json) => {
+    resetData();
     let data = json[0].fields;
     console.log(data);
-    currentBook = book;
+    currentBook = data.Book;
     setAudio(data.Audio[0].url);
     setText(data.Book, data.Chapter, data.Categories);
-    setAdjacent(chapter);
+    setAdjacent(data.Chapter);
   })
 }
 
@@ -80,13 +79,13 @@ function getCategorized(category) {
     console.log(error);
   })
   .then((json) => {
-    let data = json[0].fields;
+    resetData();
+    let data = json.fields;
     console.log(data);
+    currentBook = data.Book;
     setAudio(data.Audio[0].url);
     setText(data.Book, data.Chapter, data.Categories);
-    prevChapter = chapter -= 1;
-    nextChapter = chapter += 1;
-    currentBook = book;
+    setAdjacent(data.Chapter);
   })
 }
 
@@ -97,14 +96,14 @@ function getAdjacent(direction){
 }
 
 function animateProgress() {
-  bar.style = `width: 100%; transition: ${audio.duration}s width linear`;
+  bar.style = `animation: grow ${audio.duration}s linear; animation-play-state: running;`;
 }
 
 function toggleAudio() {
   if (playBtn.classList.value == 'playBtn') {
     playBtn.classList.add('pause');
     audio.play();
-    bar.style.animationPlayState = "running";
+    bar.style.animationPlayState = "running"
   } else {
     playBtn.classList.remove('pause');
     audio.pause();
@@ -114,17 +113,25 @@ function toggleAudio() {
 
 function dataLoaded() {
   if (audio.readyState > 1) {
-    toggleAudio()
-    var minutes = Math.floor(audio.duration / 60);
-    var seconds = Math.round(audio.duration - minutes * 60);
-    playTime.textContent = `${minutes}:${seconds}`;
     animateProgress();
+    audio.play();
+    playBtn.classList.add('pause');
   } else {
-    alert("Audio can't play")
+    console.log("Audio failed to load")
   }
 }
 
+function resetData() {
+  // animation reset
+  bar.style.animation = '';
+  
+  // chapter reset
+  nextChapter = '';
+  prevChapter = '';
+}
+
 function init() {
+  resetData();
   let selectionValue = document.querySelector('[data-select-category]').value;
   if (selectionValue === 'Choose A Category') {
     const selection = bible.randomize;

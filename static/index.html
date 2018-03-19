@@ -7,16 +7,25 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Random Bible</title>
     <meta name="author" content="Luke Moderwell">
-    <meta name="description" content="A totally random audio Bible with commentary">
+    <meta name="description" content="A totally random audio Bible experience.">
     <meta name="keywords" content="bible,audio,random">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" href="https://use.typekit.net/sav2byp.css">
   </head>
 
   <body>
     <div class="app">
-      <h2 data-book-title class="title"></h2>
-      <div data-book-categories class="categories"></div>
+      <div class="header">
+        <div data-progress class="progress"></div>
+        <h2 data-book-title class="title"></h2>
+        <div data-book-categories class="categories"></div>
+      </div>
       <div class="controls">
+        <div class="controls_audio">
+          <button class="prev" onclick="getAdjacent('prev')"><img src="/img/skip-back.svg" /></button>
+          <button data-play-button class="playBtn" onclick="toggleAudio()"></button>
+          <button class="next" onclick="getAdjacent('next')"><img src="/img/skip-forward.svg" /></button>
+        </div>
         <div class="controls_selection">
           <select data-select-category>
             <option selected disabled hidden>Choose A Category</option>
@@ -24,18 +33,12 @@
             <option>Gospel</option>
             <option>Parable</option>
           </select>
-          <button data-audio-randomize style="display: block; margin-top: 1rem;">Randomize</button>
-        </div>
-        <div class="controls_audio">
-          <button data-next class="next" onclick="fetchAdjacent('prev')">prev</button>
-          <button data-play-button class="playBtn" onclick="toggleAudio()"></button>
-          <button data-next class="next" onclick="fetchAdjacent('next')">next</button>
+          <button class="btn" data-audio-randomize>Randomize</button>
         </div>
       </div>
-      <audio data-audio-root onloadeddata="dataLoaded()" onended="fetchAdjacent('next')"></audio>
+      <audio data-audio-root onloadeddata="dataLoaded()" onended="getAdjacent('next')"></audio>
       <div class="footer">
-        <h4 data-playtime class="duration"></h4>
-        <div data-progress class="progress"></div>
+          <a href='/what'>What is this?</a>
       </div>
     </div>
   </body>

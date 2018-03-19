@@ -1,3 +1,5 @@
+$mono: "input-mono", "anonymous-pro", "inconsolata", monospace;
+
 * {
   box-sizing: border-box;
 }
@@ -11,7 +13,8 @@ body {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  background-color: papayawhip;
+  color: $black;
+  background-color: $gold;
 }
 
 h1,
@@ -22,43 +25,98 @@ h5 {
   margin: 0;
 }
 
+.btn,
+select {
+  padding: .5rem;
+  display: inline-block;
+  font-family: $mono;
+  font-size: .875rem;
+  outline: 0;
+  border: 0;
+}
+
+.btn {
+  color: $gold;
+  background-color: $black; 
+}
+
+select {
+  background-color: $cream;
+  border-radius: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 .app {
-  padding: 1rem;
+  margin: 0 auto;
+  padding: 2rem;
   width: 100%;
+  max-width: 23.4375rem;
+  height: 100vh;
+}
+
+.progress {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: .5rem;
+  background-color: $black;
 }
 
 .title {
+  font-family: "acta-display", Georgia, 'Times New Roman', Times, serif;
   margin-bottom: 1rem;
   font-size: 2.5rem;
 }
 
 .category {
+  display: inline-block;  
   margin-right: .5rem;
   padding: .25rem .5rem;
-  font-family: monospace;
+  font-family: $mono;
   background-color: rgba(0,0,0,.1);
 }
 
 .controls {
-  position: absolute;
+  position: fixed;
+  top: 0;
   left: 0;
-  top: 50%;
-  width: 100%;
+  right: 0;
+  bottom: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 
+  .controls_audio,
   .controls_selection {
-    display: block;
-  }
-
-  .controls_audio {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 2.5rem;
+
+    .prev,
+    .next {
+      background-color: transparent;
+      border: 0;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      img {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+    }
 
     .playBtn {
-      box-sizing: border-box;
-      height: 74px;
+      margin: 0 1rem 0 2.25rem;
+      height: 3.75rem;
       background-color: transparent;
-      border-color: transparent transparent transparent #202020;
+      border-color: transparent transparent transparent $cream;
       transition: 100ms all ease;
       will-change: border-width;
       cursor: pointer;
@@ -85,19 +143,22 @@ h5 {
   width: 100%;
   height: 4rem;
   padding: 1rem;
+  text-align: center;
 
-  .duration {
-    font-size: 1rem;
-    font-family: "inconsolata", monospace;
-    font-weight: 400;
+  a {
+    text-decoration: none;
+    color: $black;
+    font-family: $mono;
+    font-size: .875rem;
+  }
+}
+
+@keyframes grow {
+  from {
+    width: 0;
   }
 
-  .progress {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: .5rem;
-    background-color: yellow;
+  to {
+    width: 100%;
   }
 }
