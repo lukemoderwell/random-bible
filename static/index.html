@@ -16,30 +16,31 @@
   <body>
     <div class="app">
       <div class="header">
-        <div data-progress class="progress"></div>
         <h2 data-book-title class="title"></h2>
         <div data-book-categories class="categories"></div>
       </div>
-      <div class="controls">
-        <div class="controls_audio">
-          <button class="prev" onclick="getAdjacent('prev')"><img src="/img/skip-back.svg" /></button>
-          <button data-play-button class="playBtn" onclick="toggleAudio()"></button>
-          <button class="next" onclick="getAdjacent('next')"><img src="/img/skip-forward.svg" /></button>
-        </div>
-        <div class="controls_selection">
-          <select data-select-category>
-            <option selected disabled hidden>Choose A Category</option>
-            <option>New Testament</option>
-            <option>Gospel</option>
-            <option>Parable</option>
-            <option>Early Church</option>
-          </select>
-          <button class="btn" data-audio-randomize>Randomize</button>
-        </div>
+      <div class="selection">
+        <select data-select-category>
+          <option selected disabled hidden>Choose A Category</option>
+          <option>New Testament</option>
+          <option>Gospel</option>
+          <option>Parable</option>
+          <option>Early Church</option>
+        </select>
+        <button class="btn" data-audio-randomize>Randomize</button>
       </div>
       <audio data-audio-root onloadeddata="dataLoaded()" onended="getAdjacent('next')"></audio>
       <div class="footer">
-          <a href='/what'>What is this?</a>
+        <div class="controls">
+          <div class="controls_audio">
+            <button class="prev" onclick="getAdjacent('prev')"><img src="/img/skip-back.svg" /></button>
+            <button data-play-button class="playBtn" onclick="toggleAudio()"></button>
+            <button class="next" onclick="getAdjacent('next')"><img src="/img/skip-forward.svg" /></button>
+          </div>
+        </div>
+        <div class="progress">
+          <div data-progress class="progress-inner"></div>
+        </div>
       </div>
     </div>
   </body>
