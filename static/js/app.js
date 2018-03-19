@@ -12,10 +12,10 @@ let currentBook;
 // Probably want to replace this object due to manual updating
 const bible = {
   nt: [
-    "Matthew", "Mark", "Luke", "John"
+    "Matthew", "Mark", "Luke", "John", "Acts"
   ],
   chapters: [
-    28, 16, 24, 21
+    28, 16, 24, 21, 28
   ],
   get randomize() {
     const number = Math.floor(Math.random() * Math.floor(this.nt.length))
