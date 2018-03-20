@@ -4,6 +4,7 @@ const title = document.querySelector('[data-book-title]');
 const categoryText = document.querySelector('[data-book-categories]');
 const playBtn = document.querySelector('[data-play-button]');
 const bar = document.querySelector('[data-progress]');
+const categoryDropdown = document.querySelector('[data-select-category]');
 
 let nextChapter;
 let prevChapter;
@@ -18,21 +19,21 @@ const bible = {
     "John",
     "Acts",
     "Romans",
-    "1Corinthians",
-    "2Corinthians",
+    "1 Corinthians",
+    "2 Corinthians",
     "Galatians",
     "Ephesians",
     "Philippians",
     "Colossians",
-    "1Thessalonians",
-    "2Thessalonians",
+    "1 Thessalonians",
+    "2 Thessalonians",
     "Titus",
     "Philemon",
-    "1Peter",
-    "2Peter",
-    "1John",
-    "2John",
-    "3John",
+    "1 Peter",
+    "2 Peter",
+    "1 John",
+    "2 John",
+    "3 John",
     "Jude",
     "Revelation"
   ],
@@ -73,6 +74,23 @@ function setAdjacent(current) {
   nextChapter = current + 1;
 }
 
+function setCategories() {
+  fetch(`/categories`)
+    .then((res) => {
+      return res.json();
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .then((json) => {
+      for (let i = 0; i < json.length; i += 1) {
+        var elm = document.createElement('option');
+        elm.innerText = json[i];
+        categoryDropdown.appendChild(elm);
+      }
+    })
+}
+
 function getData(book, chapter) {
   fetch(`/bible/${book}/${chapter}`)
     .then((res) => {
@@ -93,7 +111,7 @@ function getData(book, chapter) {
 }
 
 function getCategorized(category) {
-  fetch(`/category/${category}`)
+  fetch(`/random/${category}`)
     .then((res) => {
       return res.json();
     })
@@ -154,7 +172,7 @@ function resetData() {
 
 function init() {
   resetData();
-  let selectionValue = document.querySelector('[data-select-category]').value;
+  let selectionValue = categoryDropdown.value;
   if (selectionValue === 'Choose A Category') {
     const selection = bible.randomize;
     getData(selection[0], selection[1]);
@@ -163,5 +181,6 @@ function init() {
   }
 }
 
-randomBtn.addEventListener('click', init)
-init()
+randomBtn.addEventListener('click', init);
+setCategories();
+init();
