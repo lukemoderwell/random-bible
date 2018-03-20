@@ -100,7 +100,7 @@ function getData(book, chapter) {
       console.log(error);
     })
     .then((json) => {
-      resetData();
+      reset();
       let data = json[0].fields;
       console.log(data);
       currentBook = data.Book;
@@ -119,7 +119,7 @@ function getCategorized(category) {
       console.log(error);
     })
     .then((json) => {
-      resetData();
+      reset();
       let data = json.fields;
       console.log(data);
       currentBook = data.Book;
@@ -137,6 +137,7 @@ function getAdjacent(direction) {
 
 function animateProgress() {
   bar.style = `animation: grow ${audio.duration}s linear; animation-play-state: running;`;
+  bar.classList.add('playing');
 }
 
 function toggleAudio() {
@@ -161,17 +162,17 @@ function dataLoaded() {
   }
 }
 
-function resetData() {
+function reset() {
   // animation reset
   bar.style.animation = '';
-
+  bar.classList.remove('playing');
   // chapter reset
   nextChapter = '';
   prevChapter = '';
 }
 
 function init() {
-  resetData();
+  reset();
   let selectionValue = categoryDropdown.value;
   if (selectionValue === 'Choose A Category') {
     const selection = bible.randomize;

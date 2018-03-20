@@ -10,7 +10,7 @@ body {
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   color: #020202;
-  background-color: #F8B400; }
+  background-color: #FFF5E0; }
 
 h1,
 h2,
@@ -28,15 +28,20 @@ select {
   outline: 0;
   border: 0; }
 
-.btn {
-  color: #F8B400;
-  background-color: #020202; }
-
-select {
-  background-color: #FFF5E0;
-  border-radius: 0;
-  -webkit-appearance: none;
-  appearance: none; }
+.category-select {
+  display: flex;
+  width: 100%;
+  margin-bottom: 2rem; }
+  .category-select select {
+    flex-grow: 1;
+    background-color: #ffffff;
+    border-radius: 0;
+    -webkit-appearance: none;
+    appearance: none; }
+  .category-select .btn {
+    margin-left: auto;
+    color: #F8B400;
+    background-color: #020202; }
 
 .app {
   margin: 0 auto;
@@ -95,7 +100,7 @@ select {
         margin: 0 .75rem 0 1.75rem;
         height: 2rem;
         background-color: transparent;
-        border-color: transparent transparent transparent #FFF5E0;
+        border-color: transparent transparent transparent #ffffff;
         transition: 100ms all ease;
         will-change: border-width;
         cursor: pointer;
@@ -107,10 +112,12 @@ select {
           border-width: 0px 0 0px 2rem; }
   .footer .progress {
     width: 70vw;
-    background-color: #333333; }
+    max-width: 23.4375rem;
+    background-color: #3a3a3a; }
     .footer .progress .progress-inner {
-      height: .5rem;
-      background-color: #F8B400; }
+      height: .5rem; }
+      .footer .progress .progress-inner.playing {
+        background-color: #F8B400; }
 
 @keyframes grow {
   from {
