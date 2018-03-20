@@ -12,10 +12,32 @@ let currentBook;
 // Probably want to replace this object due to manual updating
 const bible = {
   nt: [
-    "Matthew", "Mark", "Luke", "John", "Acts"
+    "Matthew",
+    "Mark",
+    "Luke",
+    "John",
+    "Acts",
+    "Romans",
+    "1Corinthians",
+    "2Corinthians",
+    "Galatians",
+    "Ephesians",
+    "Philippians",
+    "Colossians",
+    "1Thessalonians",
+    "2Thessalonians",
+    "Titus",
+    "Philemon",
+    "1Peter",
+    "2Peter",
+    "1John",
+    "2John",
+    "3John",
+    "Jude",
+    "Revelation"
   ],
   chapters: [
-    28, 16, 24, 21, 28
+    28, 16, 24, 21, 28, 16, 16, 13, 6, 4, 5, 3, 3, 1, 5, 3, 5, 1, 1, 1, 22
   ],
   get randomize() {
     const number = Math.floor(Math.random() * Math.floor(this.nt.length))
@@ -24,7 +46,7 @@ const bible = {
     if (chapter === 0) {
       chapter = Math.floor(Math.random() * Math.floor(this.chapters[number]))
     } else {
-      return [book, chapter]      
+      return [book, chapter]
     }
   }
 }
@@ -53,43 +75,43 @@ function setAdjacent(current) {
 
 function getData(book, chapter) {
   fetch(`/bible/${book}/${chapter}`)
-  .then((res) => {
-    return res.json();
-  })
-  .catch((error) => {
-    console.log(error);
-  })
-  .then((json) => {
-    resetData();
-    let data = json[0].fields;
-    console.log(data);
-    currentBook = data.Book;
-    setAudio(data.Audio[0].url);
-    setText(data.Book, data.Chapter, data.Categories);
-    setAdjacent(data.Chapter);
-  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .then((json) => {
+      resetData();
+      let data = json[0].fields;
+      console.log(data);
+      currentBook = data.Book;
+      setAudio(data.Audio[0].url);
+      setText(data.Book, data.Chapter, data.Categories);
+      setAdjacent(data.Chapter);
+    })
 }
 
 function getCategorized(category) {
   fetch(`/category/${category}`)
-  .then((res) => {
-    return res.json();
-  })
-  .catch((error) => {
-    console.log(error);
-  })
-  .then((json) => {
-    resetData();
-    let data = json.fields;
-    console.log(data);
-    currentBook = data.Book;
-    setAudio(data.Audio[0].url);
-    setText(data.Book, data.Chapter, data.Categories);
-    setAdjacent(data.Chapter);
-  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .then((json) => {
+      resetData();
+      let data = json.fields;
+      console.log(data);
+      currentBook = data.Book;
+      setAudio(data.Audio[0].url);
+      setText(data.Book, data.Chapter, data.Categories);
+      setAdjacent(data.Chapter);
+    })
 }
 
-function getAdjacent(direction){
+function getAdjacent(direction) {
   direction === "next" ?
     getData(currentBook, nextChapter) :
     getData(currentBook, prevChapter);
@@ -124,7 +146,7 @@ function dataLoaded() {
 function resetData() {
   // animation reset
   bar.style.animation = '';
-  
+
   // chapter reset
   nextChapter = '';
   prevChapter = '';
