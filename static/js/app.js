@@ -27,8 +27,12 @@ const bible = {
     "Colossians",
     "1 Thessalonians",
     "2 Thessalonians",
+    "1 Timothy",
+    "2 Timothy",
     "Titus",
     "Philemon",
+    "Hebrews",
+    "James",
     "1 Peter",
     "2 Peter",
     "1 John",
@@ -38,7 +42,7 @@ const bible = {
     "Revelation"
   ],
   chapters: [
-    28, 16, 24, 21, 28, 16, 16, 13, 6, 4, 5, 3, 3, 1, 5, 3, 5, 1, 1, 1, 22
+    28, 16, 24, 21, 28, 16, 16, 13, 6, 4, 5, 3, 5, 3, 3, 1, 12, 4, 5, 3, 5, 1, 1, 1, 22
   ],
   get randomize() {
     const number = Math.floor(Math.random() * Math.floor(this.nt.length))
