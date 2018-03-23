@@ -157,7 +157,7 @@ function toggleAudio() {
     bar.style.animationPlayState = "paused";
   }
 }
-// TODO: Pause Playtime
+// TODO: Finish increment and pause playtime
 function incrementPlayTime() {
   let min = 0;
   let sec = 00;
@@ -177,7 +177,7 @@ function setTime() {
   var seconds = time - minutes * 60;
   seconds === 0 ? seconds = `00` : seconds;
   duration.innerText = `${minutes}:${seconds}`;
-  incrementPlayTime();
+  countdown.innerHTML = `0:00`;
 }
 
 function dataLoaded() {
