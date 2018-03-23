@@ -103,7 +103,7 @@ select {
     .controls_audio {
       display: flex;
       align-items: center;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
   
       .prev,
       .next {
@@ -121,8 +121,8 @@ select {
       }
   
       .playBtn {
-        margin: 0 .75rem 0 1.75rem;
-        height: 2rem;
+        margin: 0 .75rem 0 2rem;
+        height: 2.25rem;
         background-color: transparent;
         border-color: transparent transparent transparent $white;
         transition: 100ms all ease;
@@ -143,18 +143,31 @@ select {
     }
   }
 
-  .progress {
-    width: 70vw;
-    max-width: 23.4375rem;
-    background-color: #3a3a3a;
+  .progress-container {
+    display: flex;
+    align-items: center;
 
-    .progress-inner {
-      height: .5rem;
+    .time {
+      font-size: .75rem;
+      color: $cream;
+    }
 
-      &.playing {background-color: $gold;}
+    .progress-outer {
+      margin: 0 .5rem;
+      width: 70vw;
+      max-width: 16rem;
+      background-color: #3a3a3a;
+  
+      .progress-inner {
+        height: .5rem;
+  
+        &.playing {background-color: $gold;}
+      }
     }
   }
-}
+  }
+
+  
 
 @keyframes grow {
   from {

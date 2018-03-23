@@ -26,7 +26,7 @@
       <h2 data-book-title class="title"></h2>
       <div data-book-categories class="categories"></div>
       
-      <audio data-audio-root onloadeddata="dataLoaded()" onended="getAdjacent('next')"></audio>
+      <audio data-audio-root preload onloadeddata="dataLoaded()" onended="getAdjacent('next')"></audio>
       <div class="footer">
         <div class="controls">
           <div class="controls_audio">
@@ -35,8 +35,12 @@
             <button class="next" onclick="getAdjacent('next')"><img src="/img/skip-forward.svg" /></button>
           </div>
         </div>
-        <div class="progress">
-          <div data-progress class="progress-inner"></div>
+        <div class="progress-container">
+          <span class="time" data-countdown>0:00</span>
+          <div class="progress-outer">
+            <div data-progress class="progress-inner"></div>
+          </div>
+          <span class="time" data-duration></span>
         </div>
       </div>
     </div>

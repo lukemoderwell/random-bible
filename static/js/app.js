@@ -5,6 +5,8 @@ const categoryText = document.querySelector('[data-book-categories]');
 const playBtn = document.querySelector('[data-play-button]');
 const bar = document.querySelector('[data-progress]');
 const categoryDropdown = document.querySelector('[data-select-category]');
+const countdown = document.querySelector('[data-countdown]');
+const duration = document.querySelector('[data-duration]');
 
 let nextChapter;
 let prevChapter;
@@ -155,10 +157,33 @@ function toggleAudio() {
     bar.style.animationPlayState = "paused";
   }
 }
+// TODO: Pause Playtime
+function incrementPlayTime() {
+  let min = 0;
+  let sec = 00;
+  setInterval(function() {
+    sec += 1;
+    if (sec == 60) {
+      min += 1;
+      sec = 0;
+    }
+    countdown.innerText = `${min}:${sec}`
+  }, 1000)
+}
+
+function setTime() {
+  var time = Math.round(audio.duration);
+  var minutes = Math.floor(time / 60);
+  var seconds = time - minutes * 60;
+  seconds === 0 ? seconds = `00` : seconds;
+  duration.innerText = `${minutes}:${seconds}`;
+  incrementPlayTime();
+}
 
 function dataLoaded() {
-  if (audio.readyState > 1) {
+  if (audio.readyState > 2) {
     animateProgress();
+    setTime();
     audio.play();
     playBtn.classList.add('pause');
   } else {
