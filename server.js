@@ -28,9 +28,7 @@ app.get('/categories', (req, res) => {
               '' : unique.push(categories[i])
           }
         });
-    
       fetchNextPage();
-
     }, function done(err) {
       if (err) {
         console.error(err);
@@ -43,8 +41,8 @@ app.get('/categories', (req, res) => {
 // get a specific chapter from a book
 app.get('/bible/:book/:chapter', (req, res) => {
   let data = [];
-  const book = req.params.book;
-  const chap = req.params.chapter;
+  let book = req.params.book;
+  let chap = req.params.chapter;
   base('Bible')
     .select({view: "Grid view"})
     .eachPage(function page(records, fetchNextPage) {
@@ -55,7 +53,6 @@ app.get('/bible/:book/:chapter', (req, res) => {
           }
         });
       fetchNextPage();
-
     }, function done(err) {
       if (err) {
         console.error(err);
@@ -65,15 +62,40 @@ app.get('/bible/:book/:chapter', (req, res) => {
     });
 })
 
-// get a random chapter based on a category
-app.get('/random/:category', (req, res) => {
+// get a random chapter based on book
+app.get('/book/:book', (req, res) => {
   let data = [];
-  const category = req.params.category;
+  let book = req.params.book;
   base('Bible')
     .select({view: "Grid view"})
     .eachPage(function page(records, fetchNextPage) {
       records
-        .forEach(function (record) {
+        .forEach(function(record) {
+          if (record.fields.Book == book) {
+            data.push(record);
+          }
+        });
+      fetchNextPage();
+    }, function done(err) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      let number = Math.floor(Math.random() * Math.floor(data.length))
+      res.send(data[number])
+    });
+});
+
+
+// get a random chapter based on a category
+app.get('/category/:category', (req, res) => {
+  let data = [];
+  let category = req.params.category;
+  base('Bible')
+    .select({view: "Grid view"})
+    .eachPage(function page(records, fetchNextPage) {
+      records
+        .forEach(function(record) {
           var categories = record.fields.Categories;
           for (let i = 0; i < categories.length; i += 1) {
             categories[i] == category
@@ -82,15 +104,14 @@ app.get('/random/:category', (req, res) => {
           }
         });
       fetchNextPage();
-
     }, function done(err) {
       if (err) {
         console.error(err);
         return;
       }
-      const number = Math.floor(Math.random() * Math.floor(data.length))
+      let number = Math.floor(Math.random() * Math.floor(data.length))
       res.send(data[number])
     });
-})
+});
 
 app.listen(port, () => console.log(`Listening on ${port}`))
