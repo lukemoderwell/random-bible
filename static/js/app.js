@@ -12,52 +12,6 @@ let nextChapter;
 let prevChapter;
 let currentBook;
 
-// Probably want to replace this object due to manual updating
-const bible = {
-  nt: [
-    "Matthew",
-    "Mark",
-    "Luke",
-    "John",
-    "Acts",
-    "Romans",
-    "1 Corinthians",
-    "2 Corinthians",
-    "Galatians",
-    "Ephesians",
-    "Philippians",
-    "Colossians",
-    "1 Thessalonians",
-    "2 Thessalonians",
-    "1 Timothy",
-    "2 Timothy",
-    "Titus",
-    "Philemon",
-    "Hebrews",
-    "James",
-    "1 Peter",
-    "2 Peter",
-    "1 John",
-    "2 John",
-    "3 John",
-    "Jude",
-    "Revelation"
-  ],
-  chapters: [
-    28, 16, 24, 21, 28, 16, 16, 13, 6, 4, 5, 3, 5, 3, 3, 1, 12, 4, 5, 3, 5, 1, 1, 1, 22
-  ],
-  get randomize() {
-    const number = Math.floor(Math.random() * Math.floor(this.nt.length))
-    const book = this.nt[number]
-    let chapter = Math.floor(Math.random() * Math.floor(this.chapters[number]))
-    if (chapter === 0) {
-      chapter = Math.floor(Math.random() * Math.floor(this.chapters[number]))
-    } else {
-      return [book, chapter]
-    }
-  }
-}
-
 function setText(book, chapter, categories) {
   title.textContent = `${book} ${chapter}`;
   categoryText.textContent = "";
@@ -97,27 +51,40 @@ function setCategories() {
     })
 }
 
-function getData(book, chapter) {
-  fetch(`/bible/${book}/${chapter}`)
-    .then((res) => {
-      return res.json();
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-    .then((json) => {
-      reset();
-      let data = json[0].fields;
-      console.log(data);
-      currentBook = data.Book;
-      setAudio(data.Audio[0].url);
-      setText(data.Book, data.Chapter, data.Categories);
-      setAdjacent(data.Chapter);
-    })
+function getRandom() {
+  fetch(`/random`).then((res) => {
+    return res.json();
+  }).catch((error) => {
+    console.log(error);
+  }).then((json) => {
+    reset();
+    let data = json[0].fields;
+    console.log(data);
+    currentBook = data.Book;
+    setAudio(data.Audio[0].url);
+    setText(data.Book, data.Chapter, data.Categories);
+    setAdjacent(data.Chapter);
+  })
 }
 
-function getCategorized(category) {
-  fetch(`/random/${category}`)
+function getSpecific(book, chapter) {
+  fetch(`/bible/${book}/${chapter}`).then((res) => {
+    return res.json();
+  }).catch((error) => {
+    console.log(error);
+  }).then((json) => {
+    reset();
+    let data = json[0].fields;
+    console.log(data);
+    currentBook = data.Book;
+    setAudio(data.Audio[0].url);
+    setText(data.Book, data.Chapter, data.Categories);
+    setAdjacent(data.Chapter);
+  })
+}
+
+function getRandomCategorized(category) {
+  fetch(`/category/${category}`)
     .then((res) => {
       return res.json();
     })
@@ -136,9 +103,9 @@ function getCategorized(category) {
 }
 
 function getAdjacent(direction) {
-  direction === "next" ?
-    getData(currentBook, nextChapter) :
-    getData(currentBook, prevChapter);
+  direction === "next" 
+    ? getSpecific(currentBook, nextChapter) 
+    : getSpecific(currentBook, prevChapter);
 }
 
 function animateProgress() {
@@ -204,10 +171,9 @@ function init() {
   reset();
   let selectionValue = categoryDropdown.value;
   if (selectionValue === 'Choose A Category') {
-    const selection = bible.randomize;
-    getData(selection[0], selection[1]);
+    getRandom();
   } else {
-    getCategorized(selectionValue);
+    getRandomCategorized(selectionValue);
   }
 }
 
