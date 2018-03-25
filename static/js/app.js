@@ -142,7 +142,9 @@ function setTime() {
   var time = Math.round(audio.duration);
   var minutes = Math.floor(time / 60);
   var seconds = time - minutes * 60;
-  seconds === 0 ? seconds = `00` : seconds;
+  if (seconds < 10) {
+    seconds = `0${seconds}`;
+  }
   duration.innerText = `${minutes}:${seconds}`;
   countdown.innerHTML = `0:00`;
 }
