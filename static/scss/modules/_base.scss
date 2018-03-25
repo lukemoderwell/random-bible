@@ -35,6 +35,26 @@ select {
   border: 0;
 }
 
+.header {
+  width: 100%;
+  padding: 1rem 0;
+
+  .logo {
+    font-size: .875rem;
+    font-family: $mono;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+}
+
+.container {
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
+  max-width: 23.4375rem;
+  height: 100vh;
+}
+
 .category-select {
   display: flex;
   width: 100%;
@@ -55,15 +75,6 @@ select {
   }
 }
 
-
-.app {
-  margin: 0 auto;
-  padding: 2rem;
-  width: 100%;
-  max-width: 23.4375rem;
-  height: 100vh;
-}
-
 .title {
   font-family: "acta-display", Georgia, 'Times New Roman', Times, serif;
   margin-bottom: 1rem;
@@ -80,9 +91,6 @@ select {
 }
 
 .footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
   position: fixed;
   bottom: 0;
@@ -95,16 +103,9 @@ select {
   background-color: $black;
 
   .controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
-  
     .controls_audio {
-      display: flex;
-      align-items: center;
       margin-bottom: 1.5rem;
-  
       .prev,
       .next {
         background-color: transparent;
@@ -144,23 +145,17 @@ select {
   }
 
   .progress-container {
-    display: flex;
-    align-items: center;
-
     .time {
       font-size: .75rem;
       color: $cream;
     }
-
     .progress-outer {
       margin: 0 .5rem;
       width: 70vw;
       max-width: 16rem;
       background-color: #3a3a3a;
-  
       .progress-inner {
         height: .5rem;
-  
         &.playing {background-color: $gold;}
       }
     }

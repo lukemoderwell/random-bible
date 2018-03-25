@@ -14,9 +14,10 @@
   </head>
 
   <body>
-    <div class="app">
-      <div class="header">  
-      </div>
+    <div class="header center-children">
+      <h1 class="logo">Random Bible</h1>
+    </div>
+    <div class="container">
       <div class="category-select">
         <select data-select-category>
           <option selected disabled hidden>Choose A Category</option>
@@ -27,15 +28,15 @@
       <div data-book-categories class="categories"></div>
       
       <audio data-audio-root preload onloadeddata="dataLoaded()" onended="getAdjacent('next')"></audio>
-      <div class="footer">
-        <div class="controls">
-          <div class="controls_audio">
+      <div class="footer center-children">
+        <div class="controls center-children">
+          <div class="controls_audio center-children">
             <button class="prev" onclick="getAdjacent('prev')"><img src="/img/skip-back.svg" /></button>
             <button data-play-button class="playBtn" onclick="toggleAudio()"></button>
             <button class="next" onclick="getAdjacent('next')"><img src="/img/skip-forward.svg" /></button>
           </div>
         </div>
-        <div class="progress-container">
+        <div class="progress-container center-children">
           <span class="time" data-countdown></span>
           <div class="progress-outer">
             <div data-progress class="progress-inner"></div>

@@ -1,3 +1,31 @@
+.loading {
+  height: 100vh;
+  z-index: 10; }
+
+.loading::before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  border-top-color: #333;
+  animation: loading .6s linear infinite; }
+
+@keyframes loading {
+  to {
+    transform: rotate(360deg); } }
+
+.center-children {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
 * {
   box-sizing: border-box; }
 
@@ -10,7 +38,7 @@ body {
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   color: #020202;
-  background-color: #FFF5E0; }
+  background-color: antiquewhite; }
 
 h1,
 h2,
@@ -28,6 +56,22 @@ select {
   outline: 0;
   border: 0; }
 
+.header {
+  width: 100%;
+  padding: 1rem 0; }
+  .header .logo {
+    font-size: .875rem;
+    font-family: "input-mono", "anonymous-pro", "inconsolata", monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px; }
+
+.container {
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
+  max-width: 23.4375rem;
+  height: 100vh; }
+
 .category-select {
   display: flex;
   width: 100%;
@@ -43,13 +87,6 @@ select {
     color: #F8B400;
     background-color: #020202; }
 
-.app {
-  margin: 0 auto;
-  padding: 2rem;
-  width: 100%;
-  max-width: 23.4375rem;
-  height: 100vh; }
-
 .title {
   font-family: "acta-display", Georgia, 'Times New Roman', Times, serif;
   margin-bottom: 1rem;
@@ -64,9 +101,6 @@ select {
   background-color: rgba(0, 0, 0, 0.1); }
 
 .footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
   position: fixed;
   bottom: 0;
@@ -78,13 +112,8 @@ select {
   text-align: center;
   background-color: #020202; }
   .footer .controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column; }
     .footer .controls .controls_audio {
-      display: flex;
-      align-items: center;
       margin-bottom: 1.5rem; }
       .footer .controls .controls_audio .prev,
       .footer .controls .controls_audio .next {
@@ -111,21 +140,18 @@ select {
         .footer .controls .controls_audio .playBtn.pause {
           border-style: double;
           border-width: 0px 0 0px 2rem; }
-  .footer .progress-container {
-    display: flex;
-    align-items: center; }
-    .footer .progress-container .time {
-      font-size: .75rem;
-      color: #FFF5E0; }
-    .footer .progress-container .progress-outer {
-      margin: 0 .5rem;
-      width: 70vw;
-      max-width: 16rem;
-      background-color: #3a3a3a; }
-      .footer .progress-container .progress-outer .progress-inner {
-        height: .5rem; }
-        .footer .progress-container .progress-outer .progress-inner.playing {
-          background-color: #F8B400; }
+  .footer .progress-container .time {
+    font-size: .75rem;
+    color: antiquewhite; }
+  .footer .progress-container .progress-outer {
+    margin: 0 .5rem;
+    width: 70vw;
+    max-width: 16rem;
+    background-color: #3a3a3a; }
+    .footer .progress-container .progress-outer .progress-inner {
+      height: .5rem; }
+      .footer .progress-container .progress-outer .progress-inner.playing {
+        background-color: #F8B400; }
 
 @keyframes grow {
   from {
