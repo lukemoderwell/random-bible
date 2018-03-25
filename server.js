@@ -2,16 +2,17 @@ const express = require('express')
 const airtable = require('airtable')
 const app = express()
 const port = process.env.PORT || 3000
-const airtable_base = process.env.AIRTABLE_BASE;
+const airtableBase = process.env.AIRTABLE_BASE;
 const totalEntries = process.env.TOTAL_ENTRIES;
+
+app.use(express.static("static"));
 
 airtable.configure({
   endpointUrl: 'https://api.airtable.com',
   apiKey: process.env.AIRTABLE_API_KEY
 });
 
-const base = airtable.base(airtable_base);
-app.use(express.static("static"))
+const base = airtable.base(airtableBase);
 
 // TODO: move to helpers
 function getRandom(min, max) {

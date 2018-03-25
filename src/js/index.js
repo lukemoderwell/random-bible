@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 const audio = document.querySelector('[data-audio-root]');
 const randomBtn = document.querySelector('[data-audio-randomize]');
 const title = document.querySelector('[data-book-title]');
@@ -35,9 +37,9 @@ function setAdjacent(current) {
 }
 
 function setCategories() {
-  fetch(`/categories`)
+  axios(`/categories`)
     .then((res) => {
-      return res.json();
+      return res.data;
     })
     .catch((error) => {
       console.log(error);
@@ -52,8 +54,8 @@ function setCategories() {
 }
 
 function getRandom() {
-  fetch(`/random`).then((res) => {
-    return res.json();
+  axios(`/random`).then((res) => {
+    return res.data;
   }).catch((error) => {
     console.log(error);
   }).then((json) => {

@@ -7,7 +7,9 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "sass": "node-sass --watch ./static/scss -o ./static/css",
+    "sass": "node-sass --watch ./src/scss -o ./static/css",
+    "dev": "parcel watch src/js/index.js -o bundle.js --out-dir static",
+    "prod": "parcel build src/js/index.js -o bundle.js --out-dir static",
     "start": "node server.js"
   },
   "dependencies": {
