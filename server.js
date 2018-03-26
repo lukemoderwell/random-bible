@@ -5,12 +5,13 @@ const port = process.env.PORT || 3000
 const airtable_base = process.env.AIRTABLE_BASE;
 const totalEntries = process.env.TOTAL_ENTRIES;
 
+const base = airtable.base(airtable_base);
+
 airtable.configure({
   endpointUrl: 'https://api.airtable.com',
   apiKey: process.env.AIRTABLE_API_KEY
 });
 
-const base = airtable.base(airtable_base);
 app.use(express.static("static"))
 
 // TODO: move to helpers
@@ -69,7 +70,7 @@ app.get('/categories', (req, res) => {
     view: "Grid view"
   }).eachPage(function page(records, fetchNextPage) {
     records.forEach(function (record) {
-      var categories = record.fields.Categories;
+      let categories = record.fields.Categories;
       for(let i = 0; i < categories.length; i += 1) {
         unique.includes(categories[i]) ? '' : unique.push(categories[i])
       }
