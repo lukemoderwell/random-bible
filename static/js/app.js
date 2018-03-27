@@ -7,6 +7,7 @@ const bar = document.querySelector('[data-progress]');
 const categoryDropdown = document.querySelector('[data-select-category]');
 const countdown = document.querySelector('[data-countdown]');
 const duration = document.querySelector('[data-duration]');
+const loading = document.querySelector('[data-loading]');
 
 let prevId;
 let nextId;
@@ -105,6 +106,10 @@ function getAdjacent(direction) {
     : getSpecific(prevId);
 }
 
+function isLoading(bool) {
+  bool === false ? loading.classList.remove('loading') : loading.classList.add('loading');
+}
+
 function animateProgress() {
   bar.style = `animation: grow ${audio.duration}s linear; animation-play-state: running;`;
   bar.classList.add('playing');
@@ -148,6 +153,7 @@ function setTime() {
 
 function dataLoaded() {
   if (audio.readyState > 2) {
+    isLoading(false);
     animateProgress();
     setTime();
     audio.play();
