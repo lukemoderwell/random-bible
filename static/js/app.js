@@ -8,9 +8,8 @@ const categoryDropdown = document.querySelector('[data-select-category]');
 const countdown = document.querySelector('[data-countdown]');
 const duration = document.querySelector('[data-duration]');
 
-let nextChapter;
-let prevChapter;
-let currentBook;
+let prevId;
+let nextId;
 
 function setText(book, chapter, categories) {
   title.textContent = `${book} ${chapter}`;
@@ -29,9 +28,9 @@ function setAudio(source) {
   audio.src = source;
 }
 
-function setAdjacent(current) {
-  prevChapter = current - 1;
-  nextChapter = current + 1;
+function setAdjacent(id) {
+  prevId = id - 1;
+  nextId = id + 1;
 }
 
 function setCategories() {
@@ -63,12 +62,12 @@ function getRandom() {
     currentBook = data.Book;
     setAudio(data.Audio[0].url);
     setText(data.Book, data.Chapter, data.Categories);
-    setAdjacent(data.Chapter);
+    setAdjacent(data.Id);
   })
 }
 
-function getSpecific(book, chapter) {
-  fetch(`/bible/${book}/${chapter}`).then((res) => {
+function getSpecific(id) {
+  fetch(`/id/${id}`).then((res) => {
     return res.json();
   }).catch((error) => {
     console.log(error);
@@ -76,10 +75,9 @@ function getSpecific(book, chapter) {
     reset();
     let data = json[0].fields;
     console.log(data);
-    currentBook = data.Book;
     setAudio(data.Audio[0].url);
     setText(data.Book, data.Chapter, data.Categories);
-    setAdjacent(data.Chapter);
+    setAdjacent(data.Id);
   })
 }
 
@@ -95,17 +93,16 @@ function getRandomCategorized(category) {
       reset();
       let data = json.fields;
       console.log(data);
-      currentBook = data.Book;
       setAudio(data.Audio[0].url);
       setText(data.Book, data.Chapter, data.Categories);
-      setAdjacent(data.Chapter);
+      setAdjacent(data.Id);
     })
 }
 
 function getAdjacent(direction) {
   direction === "next" 
-    ? getSpecific(currentBook, nextChapter) 
-    : getSpecific(currentBook, prevChapter);
+    ? getSpecific(nextId) 
+    : getSpecific(prevId);
 }
 
 function animateProgress() {

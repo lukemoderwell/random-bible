@@ -39,6 +39,26 @@ app.get('/random', (req, res) => {
     });
 });
 
+// get a specific chapter by ID
+app.get('/id/:id', (req, res) => {
+  const id = req.params.id;
+  let entry = [];
+  base('Bible').select({
+    view: "Grid view"
+  }).eachPage(function page(records, fetchNextPage) {
+      records.forEach(function(record) {
+        id == record.fields.Id ? entry.push(record) : ''
+      });
+      fetchNextPage();
+    }, function done(err) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      res.send(entry)
+    });
+});
+
 // get a specific chapter from a book
 app.get('/bible/:book/:chapter', (req, res) => {
   let entry = [];
