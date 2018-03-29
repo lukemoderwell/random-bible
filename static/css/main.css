@@ -7,11 +7,15 @@
   background-color: antiquewhite;
   opacity: 1;
   overflow: hidden;
-  z-index: 2;
-  transition: 1s all ease; }
+  z-index: 1;
+  transition: .8s all ease; }
+  .loading.loaded {
+    opacity: 0;
+    z-index: -1; }
   .loading .spinner {
-    width: 5rem;
-    height: 5rem;
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 1rem;
     border-radius: 50%;
     border: 0.5rem solid #ffffff;
     border-top-color: #F8B400;
@@ -63,7 +67,8 @@ select {
     font-size: .875rem;
     font-family: "input-mono", "anonymous-pro", "inconsolata", monospace;
     text-transform: uppercase;
-    letter-spacing: 1px; }
+    letter-spacing: 1px;
+    z-index: 2; }
 
 .container {
   margin: 0 auto;

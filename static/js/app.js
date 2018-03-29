@@ -107,7 +107,7 @@ function getAdjacent(direction) {
 }
 
 function isLoading(bool) {
-  bool === false ? loading.classList.remove('loading') : loading.classList.add('loading');
+  bool === true ? loading.classList.remove('loaded') : loading.classList.add('loaded');
 }
 
 function animateProgress() {
