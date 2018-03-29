@@ -53,7 +53,6 @@ select {
   padding: 2rem;
   width: 100%;
   max-width: 23.4375rem;
-  height: 100vh;
 }
 
 .category-select {
@@ -111,6 +110,7 @@ select {
       .next {
         background-color: transparent;
         border: 0;
+        outline: 0;
   
         &:hover {
           cursor: pointer;

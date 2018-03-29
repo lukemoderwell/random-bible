@@ -74,8 +74,7 @@ select {
   margin: 0 auto;
   padding: 2rem;
   width: 100%;
-  max-width: 23.4375rem;
-  height: 100vh; }
+  max-width: 23.4375rem; }
 
 .category-select {
   display: flex;
@@ -123,7 +122,8 @@ select {
       .footer .controls .controls_audio .prev,
       .footer .controls .controls_audio .next {
         background-color: transparent;
-        border: 0; }
+        border: 0;
+        outline: 0; }
         .footer .controls .controls_audio .prev:hover,
         .footer .controls .controls_audio .next:hover {
           cursor: pointer; }
