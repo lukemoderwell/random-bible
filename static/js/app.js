@@ -3,6 +3,8 @@ const randomBtn = document.querySelector('[data-audio-randomize]');
 const title = document.querySelector('[data-book-title]');
 const categoryText = document.querySelector('[data-book-categories]');
 const playBtn = document.querySelector('[data-play-button]');
+const prevBtn = document.querySelector('[data-prev]');
+const nextBtn = document.querySelector('[data-next]');
 const bar = document.querySelector('[data-progress]');
 const categoryDropdown = document.querySelector('[data-select-category]');
 const countdown = document.querySelector('[data-countdown]');
@@ -40,7 +42,7 @@ function setCategories() {
       return res.json();
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     })
     .then((json) => {
       for (let i = 0; i < json.length; i += 1) {
@@ -55,11 +57,10 @@ function getRandom() {
   fetch(`/random`).then((res) => {
     return res.json();
   }).catch((error) => {
-    console.log(error);
+    console.error(error);
   }).then((json) => {
     reset();
     let data = json[0].fields;
-    console.log(data);
     currentBook = data.Book;
     setAudio(data.Audio[0].url);
     setText(data.Book, data.Chapter, data.Categories);
@@ -71,11 +72,10 @@ function getSpecific(id) {
   fetch(`/id/${id}`).then((res) => {
     return res.json();
   }).catch((error) => {
-    console.log(error);
+    console.error(error);
   }).then((json) => {
     reset();
     let data = json[0].fields;
-    console.log(data);
     setAudio(data.Audio[0].url);
     setText(data.Book, data.Chapter, data.Categories);
     setAdjacent(data.Id);
@@ -88,20 +88,19 @@ function getRandomCategorized(category) {
       return res.json();
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     })
     .then((json) => {
       reset();
       let data = json.fields;
-      console.log(data);
       setAudio(data.Audio[0].url);
       setText(data.Book, data.Chapter, data.Categories);
       setAdjacent(data.Id);
     })
 }
 
-function getAdjacent(direction) {
-  direction === "next" 
+function getAdjacent(event) {
+  event.currentTarget.className == 'next'
     ? getSpecific(nextId) 
     : getSpecific(prevId);
 }
@@ -159,7 +158,7 @@ function dataLoaded() {
     audio.play();
     playBtn.classList.add('pause');
   } else {
-    console.log("Audio failed to load")
+    console.error("Audio failed to load")
   }
 }
 
@@ -182,6 +181,9 @@ function init() {
   }
 }
 
+playBtn.addEventListener('click', toggleAudio);
+prevBtn.addEventListener('click', getAdjacent);
+nextBtn.addEventListener('click', getAdjacent);
 randomBtn.addEventListener('click', init);
 setCategories();
 init();
