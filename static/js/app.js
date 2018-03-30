@@ -60,7 +60,7 @@ function getRandom() {
     console.error(error);
   }).then((json) => {
     reset();
-    let data = json[0].fields;
+    let data = json.fields;
     currentBook = data.Book;
     setAudio(data.Audio[0].url);
     setText(data.Book, data.Chapter, data.Categories);
