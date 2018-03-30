@@ -1,18 +1,17 @@
-const express = require('express')
-const airtable = require('airtable')
-const app = express()
-const port = process.env.PORT || 3000
+const express = require('express');
+const airtable = require('airtable');
+const app = express();
+const port = process.env.PORT || 3000;
 const airtable_base = process.env.AIRTABLE_BASE;
-const totalEntries = process.env.TOTAL_ENTRIES;
-
 const base = airtable.base(airtable_base);
+const totalEntries = process.env.TOTAL_ENTRIES;
 
 airtable.configure({
   endpointUrl: 'https://api.airtable.com',
   apiKey: process.env.AIRTABLE_API_KEY
 });
 
-app.use(express.static("static"))
+app.use(express.static("static"));
 
 // TODO: move to helpers
 function getRandom(min, max) {
@@ -123,7 +122,7 @@ app.get('/book/:book', (req, res) => {
         console.error(err);
         return;
       }
-      let number = Math.floor(Math.random() * Math.floor(data.length))
+      let number = Math.floor(Math.random() * Math.floor(entries.length))
       res.send(entries[number])
     });
 });
