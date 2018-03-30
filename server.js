@@ -4,7 +4,6 @@ const app = express();
 const port = process.env.PORT || 3000;
 const airtable_base = process.env.AIRTABLE_BASE;
 const base = airtable.base(airtable_base);
-const totalEntries = process.env.TOTAL_ENTRIES;
 
 airtable.configure({
   endpointUrl: 'https://api.airtable.com',
@@ -20,13 +19,12 @@ function getRandom(min, max) {
 
 // get a random entry
 app.get('/random', (req, res) => {
-  let entry = [];
-  let n = getRandom(1, totalEntries);
+  let entries = [];
   base('Bible').select({
     view: "Grid view"
   }).eachPage(function page(records, fetchNextPage) {
       records.forEach(function(record) {
-        n == record.fields.Id ? entry.push(record) : ''
+         entries.push(record);
       });
       fetchNextPage();
     }, function done(err) {
@@ -34,7 +32,8 @@ app.get('/random', (req, res) => {
         console.error(err);
         return;
       }
-      res.send(entry)
+      let n = getRandom(1, entries.length);
+      res.send(entries[n]);
     });
 });
 
