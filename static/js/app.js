@@ -29,6 +29,7 @@ function setText(book, chapter, categories) {
 
 function setAudio(source) {
   audio.src = source;
+  isLoading(false);
 }
 
 function setAdjacent(id) {
@@ -116,12 +117,12 @@ function animateProgress() {
 
 function toggleAudio() {
   if (playBtn.classList.value == 'playBtn') {
-    playBtn.classList.add('pause');
     audio.play();
+    playBtn.classList.add('pause');
     bar.style.animationPlayState = "running"
   } else {
-    playBtn.classList.remove('pause');
     audio.pause();
+    playBtn.classList.remove('pause');
     bar.style.animationPlayState = "paused";
   }
 }
@@ -151,12 +152,12 @@ function setTime() {
 }
 
 function dataLoaded() {
-  if (audio.readyState > 2) {
+  if (audio.readyState > 1) {
     isLoading(false);
     animateProgress();
     setTime();
-    audio.play();
-    playBtn.classList.add('pause');
+    toggleAudio();
+    console.log(audio.readyState);
   } else {
     console.error("Audio failed to load")
   }
@@ -181,6 +182,7 @@ function init() {
   }
 }
 
+audio.addEventListener("loadeddata", dataLoaded);
 playBtn.addEventListener('click', toggleAudio);
 prevBtn.addEventListener('click', getAdjacent);
 nextBtn.addEventListener('click', getAdjacent);
