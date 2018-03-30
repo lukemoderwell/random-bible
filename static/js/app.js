@@ -117,9 +117,9 @@ function animateProgress() {
 
 function toggleAudio() {
   if (playBtn.classList.value == 'playBtn') {
-    audio.play();
     playBtn.classList.add('pause');
     bar.style.animationPlayState = "running"
+    audio.play();
   } else {
     audio.pause();
     playBtn.classList.remove('pause');
@@ -154,13 +154,13 @@ function setTime() {
 function dataLoaded() {
   if (audio.readyState > 1) {
     isLoading(false);
-    animateProgress();
     setTime();
-    toggleAudio();
+    animateProgress();
     console.log(audio.readyState);
   } else {
     console.error("Audio failed to load")
   }
+  toggleAudio();
 }
 
 function reset() {
