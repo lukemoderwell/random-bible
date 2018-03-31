@@ -1,21 +1,25 @@
 .loading {
-  height: 100vh;
-  z-index: 10; }
-
-.loading::before {
-  content: '';
-  box-sizing: border-box;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 20px;
-  height: 20px;
-  margin-top: -10px;
-  margin-left: -10px;
-  border-radius: 50%;
-  border: 2px solid #ccc;
-  border-top-color: #333;
-  animation: loading .6s linear infinite; }
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: antiquewhite;
+  opacity: 1;
+  overflow: hidden;
+  z-index: 1;
+  transition: .8s all ease; }
+  .loading.loaded {
+    opacity: 0;
+    z-index: -1; }
+  .loading .spinner {
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 1rem;
+    border-radius: 50%;
+    border: 0.5rem solid #ffffff;
+    border-top-color: #F8B400;
+    animation: loading .6s linear infinite; }
 
 @keyframes loading {
   to {
@@ -63,14 +67,14 @@ select {
     font-size: .875rem;
     font-family: "input-mono", "anonymous-pro", "inconsolata", monospace;
     text-transform: uppercase;
-    letter-spacing: 1px; }
+    letter-spacing: 1px;
+    z-index: 2; }
 
 .container {
   margin: 0 auto;
   padding: 2rem;
   width: 100%;
-  max-width: 23.4375rem;
-  height: 100vh; }
+  max-width: 23.4375rem; }
 
 .category-select {
   display: flex;
@@ -118,7 +122,8 @@ select {
       .footer .controls .controls_audio .prev,
       .footer .controls .controls_audio .next {
         background-color: transparent;
-        border: 0; }
+        border: 0;
+        outline: 0; }
         .footer .controls .controls_audio .prev:hover,
         .footer .controls .controls_audio .next:hover {
           cursor: pointer; }

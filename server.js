@@ -1,9 +1,9 @@
-const express = require('express')
-const airtable = require('airtable')
-const app = express()
-const port = process.env.PORT || 3000
-const airtableBase = process.env.AIRTABLE_BASE;
-const totalEntries = process.env.TOTAL_ENTRIES;
+const express = require('express');
+const airtable = require('airtable');
+const app = express();
+const port = process.env.PORT || 3000;
+const airtable_base = process.env.AIRTABLE_BASE;
+const base = airtable.base(airtable_base);
 
 app.use(express.static("static"));
 
@@ -12,8 +12,6 @@ airtable.configure({
   apiKey: process.env.AIRTABLE_API_KEY
 });
 
-const base = airtable.base(airtableBase);
-
 // TODO: move to helpers
 function getRandom(min, max) {
   return min + Math.floor(Math.random() * (max - min + 1));
@@ -21,13 +19,33 @@ function getRandom(min, max) {
 
 // get a random entry
 app.get('/random', (req, res) => {
-  let entry = [];
-  let n = getRandom(1, totalEntries);
+  let entries = [];
   base('Bible').select({
     view: "Grid view"
   }).eachPage(function page(records, fetchNextPage) {
       records.forEach(function(record) {
-        n == record.fields.Id ? entry.push(record) : ''
+         entries.push(record);
+      });
+      fetchNextPage();
+    }, function done(err) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      let n = getRandom(1, entries.length);
+      res.send(entries[n]);
+    });
+});
+
+// get a specific chapter by ID
+app.get('/id/:id', (req, res) => {
+  const id = req.params.id;
+  let entry = [];
+  base('Bible').select({
+    view: "Grid view"
+  }).eachPage(function page(records, fetchNextPage) {
+      records.forEach(function(record) {
+        id == record.fields.Id ? entry.push(record) : ''
       });
       fetchNextPage();
     }, function done(err) {
@@ -70,7 +88,7 @@ app.get('/categories', (req, res) => {
     view: "Grid view"
   }).eachPage(function page(records, fetchNextPage) {
     records.forEach(function (record) {
-      var categories = record.fields.Categories;
+      let categories = record.fields.Categories;
       for(let i = 0; i < categories.length; i += 1) {
         unique.includes(categories[i]) ? '' : unique.push(categories[i])
       }
@@ -103,7 +121,7 @@ app.get('/book/:book', (req, res) => {
         console.error(err);
         return;
       }
-      let number = Math.floor(Math.random() * Math.floor(data.length))
+      let number = Math.floor(Math.random() * Math.floor(entries.length))
       res.send(entries[number])
     });
 });

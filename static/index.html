@@ -14,6 +14,9 @@
   </head>
 
   <body>
+    <div data-loading class="loading center-children">
+      <div class="spinner"></div>
+    </div>
     <div class="header center-children">
       <h1 class="logo">Random Bible</h1>
     </div>
@@ -26,14 +29,13 @@
       </div>
       <h2 data-book-title class="title">Loading</h2>
       <div data-book-categories class="categories"></div>
-      
-      <audio data-audio-root preload onloadeddata="dataLoaded()" onended="getAdjacent('next')"></audio>
+      <audio data-audio-root onended="getAdjacent('next')"></audio>
       <div class="footer center-children">
         <div class="controls center-children">
           <div class="controls_audio center-children">
-            <button class="prev" onclick="getAdjacent('prev')"><img src="/img/skip-back.svg" /></button>
-            <button data-play-button class="playBtn" onclick="toggleAudio()"></button>
-            <button class="next" onclick="getAdjacent('next')"><img src="/img/skip-forward.svg" /></button>
+            <button data-prev class="prev"><img src="/img/skip-back.svg" /></button>
+            <button data-play-button class="playBtn"></button>
+            <button data-next class="next"><img src="/img/skip-forward.svg" /></button>
           </div>
         </div>
         <div class="progress-container center-children">
