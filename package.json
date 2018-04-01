@@ -7,11 +7,14 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "sass": "node-sass --watch ./static/scss -o ./static/css",
-    "start": "node server.js"
+    "sass": "node-sass --watch ./src/scss -o ./dist/css",
+    "build": "parcel watch ./src/index.html",
+    "prod": "parcel build ./src/index.html",
+    "start": "node ./src/server.js"
   },
   "dependencies": {
     "airtable": "^0.5.2",
+    "axios": "^0.18.0",
     "express": "^4.16.2",
     "node-sass": "^4.7.2"
   },

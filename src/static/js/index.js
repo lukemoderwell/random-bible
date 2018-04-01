@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const audio = document.querySelector('[data-audio-root]');
 const randomBtn = document.querySelector('[data-audio-randomize]');
 const title = document.querySelector('[data-book-title]');
@@ -38,9 +40,9 @@ function setAdjacent(id) {
 }
 
 function setCategories() {
-  fetch(`/categories`)
+  axios(`/categories`)
     .then((res) => {
-      return res.json();
+      return res.data;
     })
     .catch((error) => {
       console.error(error);
@@ -55,14 +57,13 @@ function setCategories() {
 }
 
 function getRandom() {
-  fetch(`/random`).then((res) => {
-    return res.json();
+  axios(`/random`).then((res) => {
+    return res.data;
   }).catch((error) => {
     console.error(error);
   }).then((json) => {
     reset();
     let data = json.fields;
-    currentBook = data.Book;
     setAudio(data.Audio[0].url);
     setText(data.Book, data.Chapter, data.Categories);
     setAdjacent(data.Id);
@@ -70,8 +71,8 @@ function getRandom() {
 }
 
 function getSpecific(id) {
-  fetch(`/id/${id}`).then((res) => {
-    return res.json();
+  axios(`/id/${id}`).then((res) => {
+    return res.data;
   }).catch((error) => {
     console.error(error);
   }).then((json) => {
@@ -126,19 +127,6 @@ function toggleAudio() {
     bar.style.animationPlayState = "paused";
   }
 }
-// TODO: Finish increment and pause playtime
-function incrementPlayTime() {
-  let min = 0;
-  let sec = 00;
-  setInterval(function() {
-    sec += 1;
-    if (sec == 60) {
-      min += 1;
-      sec = 0;
-    }
-    countdown.innerText = `${min}:${sec}`
-  }, 1000)
-}
 
 function setTime() {
   var time = Math.round(audio.duration);
@@ -152,15 +140,14 @@ function setTime() {
 }
 
 function dataLoaded() {
-  if (audio.readyState > 1) {
+  if (audio.readyState > 2) {
     isLoading(false);
     setTime();
     animateProgress();
-    console.log(audio.readyState);
+    toggleAudio();
   } else {
     console.error("Audio failed to load")
   }
-  toggleAudio();
 }
 
 function reset() {
@@ -168,8 +155,8 @@ function reset() {
   bar.style.animation = '';
   bar.classList.remove('playing');
   // chapter reset
-  nextChapter = '';
-  prevChapter = '';
+  nextId = '';
+  prevId = '';
 }
 
 function init() {

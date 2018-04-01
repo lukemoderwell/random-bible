@@ -9,7 +9,7 @@
     <meta name="author" content="Luke Moderwell">
     <meta name="description" content="A totally random audio Bible experience.">
     <meta name="keywords" content="bible,audio,random">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="./static/scss/main.scss">
     <link rel="stylesheet" href="https://use.typekit.net/sav2byp.css">
   </head>
 
@@ -22,7 +22,7 @@
     </div>
     <div class="container">
       <div class="category-select">
-        <select data-select-category>
+        <select data-select-category data-placeholder="Choose Cateogories" multiple>
           <option selected disabled hidden>Choose A Category</option>
         </select>
         <button class="btn" data-audio-randomize>Randomize</button>
@@ -33,9 +33,9 @@
       <div class="footer center-children">
         <div class="controls center-children">
           <div class="controls_audio center-children">
-            <button data-prev class="prev"><img src="/img/skip-back.svg" /></button>
+            <button data-prev class="prev"><img src="./static/img/skip-back.svg" /></button>
             <button data-play-button class="playBtn"></button>
-            <button data-next class="next"><img src="/img/skip-forward.svg" /></button>
+            <button data-next class="next"><img src="./static/img/skip-forward.svg" /></button>
           </div>
         </div>
         <div class="progress-container center-children">
@@ -48,8 +48,7 @@
       </div>
     </div>
   </body>
-  <script type="text/javascript" src="./js/app.js"></script>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script type="text/javascript" src="./static/js/index.js"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-115828868-1"></script>
   <script>
     window.dataLayer = window.dataLayer || [];

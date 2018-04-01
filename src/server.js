@@ -5,12 +5,12 @@ const port = process.env.PORT || 3000;
 const airtable_base = process.env.AIRTABLE_BASE;
 const base = airtable.base(airtable_base);
 
+app.use(express.static('dist'));
+
 airtable.configure({
   endpointUrl: 'https://api.airtable.com',
   apiKey: process.env.AIRTABLE_API_KEY
 });
-
-app.use(express.static("static"));
 
 // TODO: move to helpers
 function getRandom(min, max) {
