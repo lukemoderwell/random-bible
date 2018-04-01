@@ -1032,6 +1032,10 @@ osenv@0:
     os-homedir "^1.0.0"
     os-tmpdir "^1.0.0"
 
+parceljs@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/parceljs/-/parceljs-0.0.1.tgz#70c596613e365fd4cd380316566b72990e19f58e"
+
 parse-headers@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/parse-headers/-/parse-headers-2.0.1.tgz#6ae83a7aa25a9d9b700acc28698cd1f1ed7e9536"

@@ -24,5 +24,8 @@
       "AIRTABLE_BASE": "@airtable_base",
       "TOTAL_ENTRIES": "@total_entries"
     }
+  },
+  "devDependencies": {
+    "parceljs": "^0.0.1"
   }
 }
