@@ -5,7 +5,7 @@ const port = process.env.PORT || 3000;
 const airtable_base = process.env.AIRTABLE_BASE;
 const base = airtable.base(airtable_base);
 
-app.use(express.static("static"));
+app.use(express.static('dist'));
 
 airtable.configure({
   endpointUrl: 'https://api.airtable.com',
