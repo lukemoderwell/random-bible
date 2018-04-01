@@ -26,6 +26,6 @@
     }
   },
   "devDependencies": {
-    "parceljs": "^0.0.1"
+    "parcel-bundler": "^1.7.0"
   }
 }
