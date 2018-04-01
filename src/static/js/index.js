@@ -140,15 +140,14 @@ function setTime() {
 }
 
 function dataLoaded() {
-  if (audio.readyState > 1) {
+  if (audio.readyState > 2) {
     isLoading(false);
     setTime();
     animateProgress();
-    console.log(audio.readyState);
+    toggleAudio();
   } else {
     console.error("Audio failed to load")
   }
-  toggleAudio();
 }
 
 function reset() {
