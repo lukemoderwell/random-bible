@@ -22,10 +22,11 @@
     </div>
     <div class="container">
       <div class="category-select" data-controller="multiselect">
-        <select data-select-category data-placeholder="Choose Cateogories">
+        <select multiple data-target="multiselect.input" data-select-category data-placeholder="Choose Cateogories">
           <option selected disabled hidden>Choose A Category</option>
         </select>
         <button class="btn" data-audio-randomize>Randomize</button>
+        <div class="output" data-target="multiselect.output"></div>
       </div>
       <h2 data-book-title class="title">Loading</h2>
       <div data-book-categories class="categories"></div>

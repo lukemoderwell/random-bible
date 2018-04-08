@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { Application } from "stimulus"
-import MultiselectController from "./controllers/multiselect_controller";
+import { Application } from 'stimulus';
+import MultiselectController from './controllers/multiselect_controller';
 
 const application = Application.start();
 application.register("multiselect", MultiselectController);
