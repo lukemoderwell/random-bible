@@ -1,4 +1,9 @@
 import axios from 'axios';
+import { Application } from "stimulus"
+import MultiselectController from "./controllers/multiselect_controller";
+
+const application = Application.start();
+application.register("multiselect", MultiselectController);
 
 const audio = document.querySelector('[data-audio-root]');
 const randomBtn = document.querySelector('[data-audio-randomize]');
@@ -40,20 +45,17 @@ function setAdjacent(id) {
 }
 
 function setCategories() {
-  axios(`/categories`)
-    .then((res) => {
-      return res.data;
-    })
-    .catch((error) => {
-      console.error(error);
-    })
-    .then((json) => {
-      for (let i = 0; i < json.length; i += 1) {
-        var elm = document.createElement('option');
-        elm.innerText = json[i];
-        categoryDropdown.appendChild(elm);
-      }
-    })
+  axios(`/categories`).then((res) => {
+    return res.data;
+  }).catch((error) => {
+    console.error(error);
+  }).then((json) => {
+    for (let i = 0; i < json.length; i += 1) {
+      var elm = document.createElement('option');
+      elm.innerText = json[i];
+      categoryDropdown.appendChild(elm);
+    }
+  })
 }
 
 function getRandom() {

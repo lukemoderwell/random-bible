@@ -17,7 +17,8 @@
     "axios": "^0.18.0",
     "express": "^4.16.2",
     "node-sass": "^4.7.2",
-    "parcel-bundler": "^1.7.0"
+    "parcel-bundler": "^1.7.0",
+    "stimulus": "^1.0.1"
   },
   "now": {
     "env": {
@@ -25,5 +26,5 @@
       "AIRTABLE_BASE": "@airtable_base",
       "TOTAL_ENTRIES": "@total_entries"
     }
-  } 
+  }
 }
