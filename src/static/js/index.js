@@ -53,6 +53,9 @@ function setCategories() {
         elm.innerText = json[i];
         categoryDropdown.appendChild(elm);
       }
+      $('[data-select-category]').chosen({
+        no_results_text: "Oops, nothing found!"
+      });
     })
 }
 
@@ -162,7 +165,7 @@ function reset() {
 function init() {
   reset();
   let selectionValue = categoryDropdown.value;
-  if (selectionValue === 'Choose A Category') {
+  if (selectionValue === '') {
     getRandom();
   } else {
     getRandomCategorized(selectionValue);
