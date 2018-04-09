@@ -53,9 +53,6 @@ function setCategories() {
         elm.innerText = json[i];
         categoryDropdown.appendChild(elm);
       }
-      $('[data-select-category]').chosen({
-        no_results_text: "Oops, nothing found!"
-      });
     })
 }
 
@@ -104,10 +101,12 @@ function getRandomCategorized(category) {
     })
 }
 
-function getAdjacent(event) {
-  event.currentTarget.className == 'next'
-    ? getSpecific(nextId) 
-    : getSpecific(prevId);
+function getNext() {
+  getSpecific(nextId) 
+}
+
+function getPrev() {
+  getSpecific(prevId);
 }
 
 function isLoading(bool) {
@@ -119,15 +118,24 @@ function animateProgress() {
   bar.classList.add('playing');
 }
 
+function playAudio() {
+  playBtn.classList.add('pause');
+  animateProgress();
+  bar.style.animationPlayState = "running"
+  audio.play();
+}
+
+function pauseAudio() {
+  audio.pause();
+  playBtn.classList.remove('pause');
+  bar.style.animationPlayState = "paused";
+}
+
 function toggleAudio() {
   if (playBtn.classList.value == 'playBtn') {
-    playBtn.classList.add('pause');
-    bar.style.animationPlayState = "running"
-    audio.play();
+    playAudio();
   } else {
-    audio.pause();
-    playBtn.classList.remove('pause');
-    bar.style.animationPlayState = "paused";
+    pauseAudio();
   }
 }
 
@@ -143,13 +151,11 @@ function setTime() {
 }
 
 function dataLoaded() {
-  if (audio.readyState > 2) {
-    isLoading(false);
-    setTime();
-    animateProgress();
-    toggleAudio();
-  } else {
-    console.error("Audio failed to load")
+  isLoading(false);
+  setTime();
+  // autoplay on desktop
+  if (audio.readyState > 1 && window.innerWidth > 767) {
+    playAudio();
   }
 }
 
@@ -165,7 +171,7 @@ function reset() {
 function init() {
   reset();
   let selectionValue = categoryDropdown.value;
-  if (selectionValue === '') {
+  if (selectionValue === '' || selectionValue === "Choose A Category") {
     getRandom();
   } else {
     getRandomCategorized(selectionValue);
@@ -173,9 +179,10 @@ function init() {
 }
 
 audio.addEventListener("loadeddata", dataLoaded);
+audio.addEventListener("ended", getNext);
 playBtn.addEventListener('click', toggleAudio);
-prevBtn.addEventListener('click', getAdjacent);
-nextBtn.addEventListener('click', getAdjacent);
+prevBtn.addEventListener('click', getPrev);
+nextBtn.addEventListener('click', getNext);
 randomBtn.addEventListener('click', init);
 setCategories();
 init();
