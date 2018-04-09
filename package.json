@@ -1,6 +1,6 @@
 {
   "name": "random-bible",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "server.js",
   "repository": "https://github.com/lukemoderwell/random-bible.git",
   "author": "lukemoderwell <luke.moderwell@gmail.com>",
