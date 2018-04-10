@@ -29,7 +29,8 @@ function setText(book, chapter, categories) {
   }
 }
 
-function setAudio(source) {
+function setAudio(source, book, chapter) {
+  audio.title = `${book} ${chapter}`;
   audio.src = source;
   isLoading(false);
 }
@@ -64,7 +65,7 @@ function getRandom() {
   }).then((json) => {
     reset();
     let data = json.fields;
-    setAudio(data.Audio[0].url);
+    setAudio(data.Audio[0].url, data.Book, data.Chapter);
     setText(data.Book, data.Chapter, data.Categories);
     setAdjacent(data.Id);
   })
