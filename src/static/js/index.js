@@ -179,6 +179,12 @@ function init() {
   }
 }
 
+document.addEventListener('keypress', function(key){
+  if ( key.keyCode == 32 ) {
+    toggleAudio();
+  }
+});
+
 audio.addEventListener("loadeddata", dataLoaded);
 audio.addEventListener("ended", getNext);
 playBtn.addEventListener('click', toggleAudio);
