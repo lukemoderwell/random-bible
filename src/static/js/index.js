@@ -31,6 +31,7 @@ function getRandom() {
 }
 
 function getSpecific(id) {
+  isLoading(true);
   axios(`/id/${id}`).then((res) => {
     return res.data;
   }).catch((error) => {
@@ -196,9 +197,17 @@ function init() {
   }
 }
 
-document.addEventListener('keypress', function(key){
-  if ( key.keyCode == 32 ) {
-    toggleAudio();
+document.addEventListener('keydown', function(key){
+  switch (key.keyCode) {
+    case 32:
+      toggleAudio();
+      break;
+    case 37:
+      getPrev();
+      break;
+    case 39:
+      getNext();
+      break;
   }
 });
 
