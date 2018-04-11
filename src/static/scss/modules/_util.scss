@@ -9,7 +9,7 @@
   opacity: 1;
   overflow: hidden;
   z-index: 1;
-  transition: .8s all ease;
+  transition: .45s all ease-in-out;
 
   &.loaded {
     opacity: 0;

@@ -86,6 +86,7 @@ function getSpecific(id) {
 }
 
 function getRandomCategorized(category) {
+  isLoading(true);
   fetch(`/category/${category}`)
     .then((res) => {
       return res.json();
@@ -111,7 +112,7 @@ function getPrev() {
 }
 
 function isLoading(bool) {
-  bool === true ? loading.classList.remove('loaded') : loading.classList.add('loaded');
+  bool == true ? loading.classList.remove('loaded') : loading.classList.add('loaded');
 }
 
 function animateProgress() {
