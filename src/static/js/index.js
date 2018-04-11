@@ -16,47 +16,6 @@ const loading = document.querySelector('[data-loading]');
 let prevId;
 let nextId;
 
-function setText(book, chapter, categories) {
-  title.textContent = `${book} ${chapter}`;
-  categoryText.textContent = "";
-  if (categories !== null) {
-    for (let i = 0; i < categories.length; i += 1) {
-      var elm = document.createElement('span');
-      elm.classList.add('category');
-      elm.innerText = categories[i];
-      categoryText.appendChild(elm);
-    }
-  }
-}
-
-function setAudio(source, book, chapter) {
-  audio.title = `${book} ${chapter}`;
-  audio.src = source;
-  isLoading(false);
-}
-
-function setAdjacent(id) {
-  prevId = id - 1;
-  nextId = id + 1;
-}
-
-function setCategories() {
-  axios(`/categories`)
-    .then((res) => {
-      return res.data;
-    })
-    .catch((error) => {
-      console.error(error);
-    })
-    .then((json) => {
-      for (let i = 0; i < json.length; i += 1) {
-        var elm = document.createElement('option');
-        elm.innerText = json[i];
-        categoryDropdown.appendChild(elm);
-      }
-    })
-}
-
 function getRandom() {
   axios(`/random`).then((res) => {
     return res.data;
@@ -111,6 +70,74 @@ function getPrev() {
   getSpecific(prevId);
 }
 
+function setText(book, chapter, categories) {
+  title.textContent = `${book} ${chapter}`;
+  categoryText.textContent = "";
+  if (categories !== null) {
+    for (let i = 0; i < categories.length; i += 1) {
+      var el = document.createElement('span');
+      el.classList.add('category');
+      el.innerText = categories[i];
+      el.setAttribute('data-category', categories[i]);
+      categoryText.appendChild(el);
+    }
+    linkCategories();
+  }
+}
+
+function setAudio(source, book, chapter) {
+  audio.title = `${book} ${chapter}`;
+  audio.src = source;
+  isLoading(false);
+}
+
+function setAdjacent(id) {
+  prevId = id - 1;
+  nextId = id + 1;
+}
+
+function setCategories() {
+  axios(`/categories`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+    .then((json) => {
+      for (let i = 0; i < json.length; i += 1) {
+        var el = document.createElement('option');
+        el.innerText = json[i];
+        categoryDropdown.appendChild(el);
+      }
+    })
+}
+
+function setTime() {
+  var time = Math.round(audio.duration);
+  var minutes = Math.floor(time / 60);
+  var seconds = time - minutes * 60;
+  if (seconds < 10) {
+    seconds = `0${seconds}`;
+  }
+  duration.innerText = `${minutes}:${seconds}`;
+  countdown.innerHTML = `0:00`;
+}
+
+function linkCategories() {
+  let tiles = document.querySelectorAll('[data-category]');
+  for (let i = 0; i < tiles.length; i += 1) {
+    tiles[i].addEventListener('click', function() {
+      handleCategoryClick(this);
+    })
+  }
+}
+
+function handleCategoryClick(el) {
+  categoryDropdown.value = el.dataset.category;
+  randomBtn.click();
+}
+
 function isLoading(bool) {
   bool == true ? loading.classList.remove('loaded') : loading.classList.add('loaded');
 }
@@ -139,17 +166,6 @@ function toggleAudio() {
   } else {
     pauseAudio();
   }
-}
-
-function setTime() {
-  var time = Math.round(audio.duration);
-  var minutes = Math.floor(time / 60);
-  var seconds = time - minutes * 60;
-  if (seconds < 10) {
-    seconds = `0${seconds}`;
-  }
-  duration.innerText = `${minutes}:${seconds}`;
-  countdown.innerHTML = `0:00`;
 }
 
 function dataLoaded() {
