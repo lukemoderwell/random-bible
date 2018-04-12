@@ -64,10 +64,16 @@ function getRandomCategorized(category) {
 }
 
 function getNext() {
+  if (playBtn.classList.value !== 'playBtn') {
+    pauseAudio();
+  }
   getSpecific(nextId) 
 }
 
 function getPrev() {
+  if (playBtn.classList.value !== 'playBtn') {
+    pauseAudio();
+  }
   getSpecific(prevId);
 }
 
